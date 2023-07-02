@@ -19,29 +19,56 @@ agregarNuevoContacto("Giovanny", "Hernandez", "3017765480", "Bogotá", "Portal d
 agregarNuevoContacto("Jaime", "Gonzalez", "3028896215", "Bucaramanga", "Madelena Urbano 2");
 agregarNuevoContacto("Dailibeth","Lugo", "3008829687", "Trujillo", "La Rinconada");
 agregarNuevoContacto("Jesus", "Fuentes", "3037946213", "San Francisco", "La Noria");
+agregarNuevoContacto("Jimena", "Gonzalez", "3037746213", "Maturin", "Los Iranies");
+agregarNuevoContacto("Andres", "Sarmiento", "3037946813", "San Gil", "San Gil 2058");
+agregarNuevoContacto("Celis", "Garcia", "3037246213", "Maracaibo", "La Libertad");
+console.log("Mi lista de contactos es:");
 console.log(nombresContactos);
 
-//Función para borrar un contacto existente de la lista
-function suprimirContacto(nombreContacto){
+function encontrarContacto(nombreContacto){
     const nuevoContacto = nombreContacto.split(" ");
     const nombre = nuevoContacto[0];
     const apellido = nuevoContacto[1];
     for(let i = 0; i < nombresContactos.length; i++){
         if(nombresContactos[i].nombre === nombre && nombresContactos[i].apellido === apellido){
-            return nombresContactos.splice(i, 1);
+            return i;
         }
     }
+    return -1;
 }
 
+//Crea una función para eliminar un contacto existente de la lista
+function suprimirContacto(nombreContacto) {
+    const indice = encontrarContacto(nombreContacto);
+    if (indice == -1){
+        return nombresContactos;
+    }
+    return nombresContactos.splice(indice, 1);
+}
+console.log("Mi lista de contactos actualizada es");
+suprimirContacto("Andres Sarmiento");
 suprimirContacto("Jaime Gonzalez");
-suprimirContacto("Jesus Fuentes");
 console.log(nombresContactos);
 
-//Función para imprimir en consola los contactos presentes en la lista
-function imprimirContacto(){
+//Crea una función para imprimir en consola los contactos presentes en la lista
+function imprimir(){
     for (const contacto of nombresContactos) {
         console.log(contacto);
     }
 }
+console.log("Mi lista de contactos actual es:");
+imprimir();
 
-imprimirContacto();
+//Bonus: Añade una función que permita actualizar un contacto
+function renovarContacto(nombreContacto, datos) {
+    const indice = encontrarContacto(nombreContacto);
+    if (indice == -1){
+        return nombresContactos;
+    }
+    nombresContactos[indice] = { ...nombresContactos[indice], ...datos };
+}
+console.log("Lista de contacto actual:");
+renovarContacto("Jesus Fuentes", { telefono: "99887765" });
+renovarContacto("Dailibeth Lugo", { apellido: "Rangel"});
+imprimir();
+
